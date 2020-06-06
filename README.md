@@ -31,6 +31,8 @@ The files themselves are well-documented and will guide you through all the data
 ## Running
 Make sure you have chistributed up and running on your machine. You can find instructions on how to install chistributed on a Linux computer in this [repository](https://github.com/uchicago-cs/chistributed). For non-Linux system, modify the third step of the installation process and replace the path to your local Python bin. <br>
 <br>
+Also make sure you ZeroMQ downloaded on your machine. You can find instructions on how to install ZeroMQ [here](https://zeromq.org/download/). <br>
+<br>
 You can build Halo for use with chistributed with:
 
 ```
