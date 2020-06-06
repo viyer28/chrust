@@ -1,15 +1,20 @@
-extern crate zmq;
-use structopt::StructOpt;
+// File: main.rs
+//
+// The purpose of this file is to initialize the node process.
 
+extern crate zmq;
+#[macro_use]
+extern crate chan;
+use structopt::StructOpt;
 mod handler;
+mod hash;
 mod msg;
 mod node;
 
+/// Holds data parsed from the command line to initialize node
 #[derive(StructOpt, Debug)]
 #[structopt(name = "basic")]
 pub struct CLI {
-  /// Activate debug mode
-  // short and long flags (-d, --debug) will be deduced from the field's name
   #[structopt(short, long)]
   debug: bool,
 
@@ -26,7 +31,9 @@ pub struct CLI {
   peer: Option<Vec<String>>,
 }
 
+/// Main function
 fn main() {
+  // Command line arguments are parsed and the message handler is constructed.
   let cli_options = CLI::from_args();
   let ctx = zmq::Context::new();
   let mut handler = handler::Handler::new(
@@ -34,8 +41,9 @@ fn main() {
     &cli_options.node_name,
     &cli_options.pub_endpoint,
     &cli_options.router_endpoint,
+    cli_options.peer,
   );
 
+  // The handler begins listening for messages from the broker.
   handler.listen_to_publisher();
-  //handler.listen_to_broker();
 }

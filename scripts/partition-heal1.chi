@@ -1,0 +1,72 @@
+
+start -n node-1
+start -n node-2
+start -n node-3
+start -n node-4
+
+wait -t 5
+
+set -n node-1 -k LOG -v "INITIALIZED 4 NODES"
+
+wait -t 2
+
+create_partition -n part -p node-1,node-2 -2 node-3,node-4
+
+wait -t 2
+
+set -n node-1 -k LOG -v "PARTITION CREATED"
+
+wait -t 10
+
+set -n node-1 -k X -v 1
+set -n node-1 -k Y -v 2
+set -n node-1 -k Z -v 3
+
+wait -t 10
+
+get -n node-1 -k X
+get -n node-2 -k X
+get -n node-3 -k X
+
+get -n node-1 -k Y
+get -n node-2 -k Y
+get -n node-3 -k Y
+get -n node-4 -k Y
+
+get -n node-1 -k Z
+get -n node-2 -k Z
+get -n node-3 -k Z
+get -n node-4 -k Z
+
+wait -t 5
+
+remove_partition -n part
+
+wait -t 2
+
+set -n node-1 -k LOG -v "PARTITION HEALED"
+
+wait -t 10
+
+get -n node-1 -k X
+get -n node-2 -k X
+get -n node-3 -k X
+get -n node-4 -k X
+
+get -n node-1 -k Y
+get -n node-2 -k Y
+get -n node-3 -k Y
+get -n node-4 -k Y
+
+get -n node-1 -k Z
+get -n node-2 -k Z
+get -n node-3 -k Z
+get -n node-4 -k Z
+
+wait -t 2
+
+set -n node-1 -k LOG -v "COMPLETED... CTRL-C TO EXIT"
+
+wait -t 2
+
+quit

@@ -1,0 +1,52 @@
+start -n node-1
+start -n node-2
+start -n node-3
+start -n node-4
+
+wait -t 5
+
+set -n node-1 -k LOG -v "INITIALIZED 4 NODES"
+
+wait -t 2
+
+set -n node-1 -k X -v 1
+set -n node-1 -k Y -v 2
+set -n node-1 -k Z -v 3
+
+wait -t 10
+
+fail_node -n node-1
+
+wait -t 2
+
+set -n node-1 -k LOG -v "FAILED NODE 1"
+
+wait -t 5
+
+get -n node-2 -k X
+get -n node-2 -k Y
+get -n node-2 -k Z
+
+wait -t 5
+
+set -n node-2 -k A -v 4
+set -n node-3 -k A -v 5
+set -n node-4 -k A -v 6
+
+recover_node -n node-1
+
+wait -t 2
+
+set -n node-1 -k LOG -v "RECOVERED NODE 1"
+
+wait -t 5
+
+get -n node-1 -k A
+
+wait -t 2
+
+set -n node-1 -k LOG -v "COMPLETED... CTRL-C TO EXIT"
+
+wait -t 2
+
+quit
