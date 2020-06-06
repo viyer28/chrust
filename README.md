@@ -1,4 +1,4 @@
-# Halo
+# Halo 😇
 ## A Self-Stabilizing Distributed Data Store
 Written in Rust. <br>
 If your machine does not have Rust installed: <br>
